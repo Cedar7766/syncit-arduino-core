@@ -6,7 +6,8 @@
 # https://arduino.github.io/arduino-cli/latest/platform-specification/
 
 name=syncit
-version=1.8.6
+architecture=avr
+version=1.0.0
 
 # AVR compile variables
 # ---------------------
