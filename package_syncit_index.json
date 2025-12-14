@@ -1,0 +1,43 @@
+{
+  "packages": [
+    {
+      "name": "syncit",
+      "maintainer": "Andy James",
+      "websiteURL": "https://github.com/Cedar7766/syncit-arduino-core",
+      "email": "",
+      "help": {
+        "online": "https://github.com/Cedar7766/syncit-arduino-core"
+      },
+      "platforms": [
+        {
+          "name": "Sync-it AVR Boards",
+          "architecture": "avr",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "url": "https://cedar7766.github.io/syncit-arduino-core/syncit-arduino-1.0.0.zip",
+          "archiveFileName": "syncit-arduino-1.0.0.zip",
+          "checksum": "d25ef6e319b9862d581b636f2bd6841a1c84f914217b37d7885121509e607a7d",
+          "size": "15715",
+          "boards": [
+            {
+              "name": "Sync-it (ATmega328PB)"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "avr-gcc",
+              "version": "7.3.0-atmel3.6.1-arduino7"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.3.0-arduino17"
+            }
+          ]
+        }
+      ],
+      "tools": []
+    }
+  ]
+}
