@@ -1,115 +1,163 @@
-Hardware & Bootloader Notes (Important)
-Reset Circuit (v7.15–v7.17 Boards)
+# Sync-it Arduino Quick Start
 
-Earlier board revisions used a non-standard reset circuit that relied on undefined behaviour:
+This repository provides **Arduino IDE support for the Sync-it PCB** (ATmega328PB), allowing firmware to be edited, compiled, and uploaded without requiring VS Code or PlatformIO.
 
-Old (incorrect) design
+The Arduino setup is intended for **end users and quick testing**.  
+The **primary development workflow** remains VS Code / PlatformIO.
 
-RTS → 100 nF → RESET
+---
 
-470 kΩ pulldown
+## Requirements
 
-No pull-up (5V rail unpowered during reset)
+- Sync-it PCB (ATmega328PB)
+- USB-to-UART adapter connected to the Sync-it programming header
+- Arduino IDE (1.8.x or 2.x)
+- This Sync-it Arduino hardware package
 
-Worked intermittently by chance
+---
 
-Current (correct) design
+## Hardware reset requirement (important)
 
-DTR → 100 nF → RESET
+Sync-it requires a **standard Arduino-compatible auto-reset circuit**.
 
-10 kΩ pull-up to VCC
+```
+DTR ── 100 nF ── RESET
+RESET ── 10 kΩ ── VCC
+```
 
-Arduino-standard auto-reset topology
+**Notes:**
+- DTR must be used (not RTS)
+- Capacitor must be 100 nF
+- Reset must have a 10 kΩ pull-up to VCC
 
-Reliable and future-proof
+Earlier Sync-it board revisions used a non-standard reset circuit that shouls also work with this package.
 
-This change is required for consistent USB uploads and compatibility with standard Arduino tooling.
+---
 
-Schematic reference:
-DTR — 100 nF — RESET, with 10 kΩ pull-up to VCC
+## Installing the Sync-it board package
 
-Bootloader Behaviour
+### Boards Manager (recommended)
 
-Custom Optiboot build for ATmega328PB
+1. Open **Arduino IDE**
+2. Go to **Preferences**
+3. Add this URL to **Additional Boards Manager URLs**:
 
-UART0 @ 57600 baud
+```
+https://Cedar7766.github.io/syncit-arduino/package_syncit_index.json
+```
 
-Bootloader LED flash count configurable at build time:
+4. Open **Tools → Board → Boards Manager**
+5. Search for **Sync-it**
+6. Install the package
+7. Restart the Arduino IDE
 
-2 / 4 / 6 flashes (testing variants)
+---
 
-4 flashes currently recommended
+### Manual installation (advanced)
 
-Increased LED_START_FLASHES improves USB upload reliability
+Clone or copy this repository into your Arduino sketchbook:
 
-Bootloader is protected from overwrite using lock bits
+```
+<Sketchbook>/hardware/syncit/avr/
+```
 
-Lock Bits & Protection
+Restart the Arduino IDE.
 
-Bootloader is protected against accidental overwrite
+---
 
-Application code cannot overwrite bootloader
+## Selecting the board
 
-ISP access remains available for factory recovery
+From **Tools → Board**:
 
-Flash read-out protection is not enabled (intentional, to allow recovery)
+```
+Sync-it → Sync-it (ATmega328PB)
+```
 
-Lock bits are applied during Burn Bootloader only.
+Once selected, Sync-it-specific options appear under the **Tools** menu.
 
-Upload Behaviour & Erase Notes
+---
 
-USB uploads
+## Board options
 
-Erase application flash only
+### Bootloader LED flashes
 
-Bootloader, EEPROM, and fuses are preserved
+Controls how many times the LED flashes at reset (bootloader delay):
 
-ISP programming
+- 2 flashes
+- 4 flashes (recommended)
+- 6 flashes
 
-Full chip erase unless -D is specified
+Changing this option requires **burning the bootloader again**.
 
-Used only for factory programming and recovery
+---
 
-Once a board is programmed and calibrated, all future updates are via USB only.
+### Upload baud rate
 
-Supported Programming Configurations
-Bootloader	Tool / IDE	Method	Result
-Sync-it Optiboot	PlatformIO / VS Code	USB	✅ Recommended
-Sync-it Optiboot	Arduino IDE (custom board)	USB	✅ Supported
-Watterott Optiboot	Arduino IDE (Watterott defs)	USB	✅ Works
-MiniCore	Arduino IDE	USB	❌ Not supported
-Any	ISP (USBasp)	ISP	✅ Factory / recovery only
-Arduino IDE Support
+- 57600 (default)
+- 115200
 
-Custom Sync-it board package provided
+---
 
-Minimal platform.txt and boards.txt
+## Burning the bootloader (first-time setup)
 
-Supports:
+1. Connect an ISP programmer (e.g. USBasp)
+2. Select **Tools → Programmer → USBasp**
+3. Click **Tools → Burn Bootloader**
 
-Compile to .hex (no bootloader)
+This will:
+- Flash the Sync-it Optiboot bootloader
+- Program the correct fuse settings
+- Protect the bootloader from overwrite
 
-USB upload
+---
 
-Burn Bootloader
+## Uploading firmware over USB
 
-Menu options included for:
+1. Disconnect the ISP programmer
+2. Connect the USB-to-UART adapter
+3. Select the correct **Port** under **Tools → Port**
+4. Click **Upload**
 
-Bootloader LED flash count
+Notes:
+- EEPROM is preserved
+- Bootloader is protected
+- No ISP access required after setup
 
-Upload baud rate
+---
 
-This avoids requiring users to install PlatformIO or MiniCore.
+## Exporting a compiled HEX file
 
-Known Limitations
+Use:
 
-MiniCore board definitions are not compatible with this hardware’s USB reset behaviour
+```
+Sketch → Export Compiled Binary
+```
 
-Only one board definition is intentionally exposed to avoid user confusion
+The `.hex` file will be created in the sketch folder.
 
-ISP should not be used after production programming unless recovery is required
+---
 
-Key Takeaway
+## Supported configurations
 
-The current reset hardware + custom Optiboot + Arduino-standard DTR reset
-is now stable, repeatable, and production-safe.
+| Bootloader        | Upload method        | Status |
+|------------------|----------------------|--------|
+| Sync-it Optiboot | Arduino IDE (USB)    | ✅ Supported |
+| Sync-it Optiboot | VS Code / PlatformIO | ✅ Primary |
+| Watterott        | Arduino IDE (USB)    | ⚠️ Limited |
+| MiniCore         | Arduino IDE (USB)    | ❌ Unsupported |
+
+---
+
+## Troubleshooting
+
+### Upload works once but fails later
+
+- Confirm DTR is used, not RTS
+- Confirm 10 kΩ reset pull-up is fitted
+- Re-burn the bootloader if unsure
+
+---
+
+## License
+
+Provided as-is for use with Sync-it hardware.
