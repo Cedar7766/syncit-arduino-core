@@ -17,7 +17,7 @@
           "url": "https://Cedar7766.github.io/syncit-arduino-core/syncit-avr-1.0.0.zip",
           "archiveFileName": "syncit-avr-1.0.0.zip",
           "checksum": "SHA-256:d25ef6e319b9862d581b636f2bd6841a1c84f914217b37d7885121509e607a7d",
-          "size": 15715,
+          "size": 24450,
           "boards": [
             {
               "name": "Sync-it (ATmega328PB)"
