@@ -14,10 +14,13 @@ syncit.upload.protocol=arduino
 syncit.upload.maximum_size=32256
 syncit.upload.maximum_data_size=2048
 
+syncit.build.board=AVR_SYNCIT
+
 syncit.build.mcu=atmega328pb
 syncit.build.f_cpu=16000000L
-syncit.build.core=arduino
+syncit.build.core=arduino:arduino
 syncit.build.variant=syncit
+syncit.build.board=AVR_SYNCIT
 
 syncit.bootloader.tool=avrdude
 syncit.bootloader.low_fuses=0xFF
@@ -25,9 +28,14 @@ syncit.bootloader.high_fuses=0xD6
 syncit.bootloader.extended_fuses=0xF5
 syncit.bootloader.unlock_bits=0x3F
 syncit.bootloader.lock_bits=0x0F
+syncit.upload.tool=avrdude
+syncit.upload.protocol=arduino
+
+syncit.bootloader.protocol=arduino
+syncit.bootloader.speed=57600
 
 ## Bootloader delay menu selection
-syncit.menu.bootflash=Bootloader LED flashes
+menu.bootflash=Bootloader LED flashes
 
 syncit.menu.bootflash.led2=2 flashes
 syncit.menu.bootflash.led2.bootloader.file=optiboot/optiboot_syncit_led2_57600.hex
@@ -38,11 +46,13 @@ syncit.menu.bootflash.led4.bootloader.file=optiboot/optiboot_syncit_led4_57600.h
 syncit.menu.bootflash.led6=6 flashes
 syncit.menu.bootflash.led6.bootloader.file=optiboot/optiboot_syncit_led6_57600.hex
 
+
 ## Upload baud rate selection
-syncit.menu.baud=Upload baud
+menu.baud=Upload baud
 
 syncit.menu.baud.57600=57600 (default)
 syncit.menu.baud.57600.upload.speed=57600
 
 syncit.menu.baud.115200=115200
 syncit.menu.baud.115200.upload.speed=115200
+
