@@ -12,6 +12,33 @@
         {
           "name": "Sync-it AVR Boards",
           "architecture": "avr",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "url": "https://Cedar7766.github.io/syncit-arduino-core/syncit-avr-1.0.0.zip",
+          "archiveFileName": "syncit-avr-1.0.10.zip",
+          "checksum": "SHA-256:0ec4a4de62b1cc65cf6527d3a43a214eac426c9c398d17e78ead6caaba991d79",
+          "size": 10186,
+          "boards": [
+            {
+              "name": "Sync-it (ATmega328PB)"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "avr-gcc",
+              "version": "7.3.0-atmel3.6.1-arduino7"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.3.0-arduino17"
+            }
+          ]
+        }
+                {
+          "name": "Sync-it AVR Boards",
+          "architecture": "avr",
           "version": "1.0.1",
           "category": "Contributed",
           "url": "https://Cedar7766.github.io/syncit-arduino-core/syncit-avr-1.0.1.zip",
