@@ -73,6 +73,10 @@ recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.f
 recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} {compiler.objcopy.eep.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.eep"
 recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} {compiler.elf2hex.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 
+## Automatically export application hex to the sketch folder
+recipe.hooks.objcopy.postobjcopy.1.pattern="{runtime.platform.path}/tools/export-hex.sh" "{build.path}/{build.project_name}.hex" "{build.source.path}" "{build.project_name}"
+recipe.hooks.objcopy.postobjcopy.1.pattern.windows="{runtime.platform.path}\\tools\\export-hex.bat" "{build.path}\\{build.project_name}.hex" "{build.source.path}" "{build.project_name}"
+
 ## Save hex
 recipe.output.tmp_file={build.project_name}.hex
 recipe.output.save_file={build.project_name}.{build.variant}.hex
