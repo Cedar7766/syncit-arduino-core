@@ -35,8 +35,8 @@
               "version": "6.3.0-arduino17"
             }
           ]
-        }
-                {
+        },
+        {
           "name": "Sync-it AVR Boards",
           "architecture": "avr",
           "version": "1.0.1",
