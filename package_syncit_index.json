@@ -47,7 +47,7 @@
           "size": 11937,
           "boards": [
             {
-              "name": "Sync-it (ATmega328PB) with hex"
+              "name": "Sync-it (ATmega328PB)"
             }
           ],
           "toolsDependencies": [
